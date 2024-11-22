@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "89764106891",
+    "project_id": "laneoptimization-a75b3",
+    "storage_bucket": "laneoptimization-a75b3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89764106891:android:7a55333baeb8d41bd87a8e",
+        "android_client_info": {
+          "package_name": "com.example.lane"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDONHZfUduyQ-5O1_HoA53RQmHcI7dLXk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
