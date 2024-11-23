@@ -1,3 +1,4 @@
+import 'package:dsc_lane_optimization_app/admin/detailsPage.dart';
 import 'package:dsc_lane_optimization_app/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -71,70 +72,77 @@ class _AdminpageState extends State<Adminpage> {
                   vertical: 10,
                   horizontal: 10,
                 ),
-                child: ListTile(
-                  tileColor: Theme.of(context).colorScheme.primaryContainer,
-                  title: Text(user.name),
-                  subtitle: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(user.email),
-                          Text(
-                            DateFormat("dd-MM-yyyy h:mm a").format(
-                              user.createdOn.toDate(),
-                            ),
-                          ),
-                        ],
+                child: GestureDetector(
+                  onDoubleTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailsPage(user: user, userId: userId),
                       ),
-                    ],
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Pending/Accepted button
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: user.isPending
-                              ? Colors.red
-                              : Colors.green, // Button color
+                    );
+                  },
+                  child: ListTile(
+                    tileColor: Theme.of(context).colorScheme.primaryContainer,
+                    title: Text(user.name),
+                    subtitle: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Symptoms: ' + user.symptomsDescription),
+                            Text('Emergency Signal Time : ' + user.createdOn),
+                          ],
                         ),
-                        onPressed: () {
-                          // Toggle isPending and update the user
-                          Users updatedUser = user.copyWith(
-                            isPending: !user.isPending,
-                            isCompleted: false, // Ensure logical consistency
-                          );
-                          _databaseService.updateUser(userId, updatedUser);
-                        },
-                        child: Text(
-                          user.isPending ? 'Pending' : 'Accepted',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      const SizedBox(width: 8), // Add spacing between buttons
-
-                      // Completed/Ongoing button (only shown when isPending is false)
-                      if (!user.isPending)
+                      ],
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Pending/Accepted button
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: user.isCompleted
-                                ? Colors.green
-                                : Colors.red, // Button color
+                            backgroundColor: user.isPending
+                                ? Colors.red
+                                : Colors.green, // Button color
                           ),
                           onPressed: () {
-                            // Toggle isCompleted and update the user
+                            // Toggle isPending and update the user
                             Users updatedUser = user.copyWith(
-                              isCompleted: !user.isCompleted,
+                              isPending: !user.isPending,
+                              isCompleted: false, // Ensure logical consistency
                             );
                             _databaseService.updateUser(userId, updatedUser);
                           },
                           child: Text(
-                            user.isCompleted ? 'Completed' : 'Ongoing',
+                            user.isPending ? 'Pending...' : 'Accepted',
                             style: const TextStyle(color: Colors.white),
                           ),
                         ),
-                    ],
+                        const SizedBox(width: 8), // Add spacing between buttons
+
+                        // Completed/Ongoing button (only shown when isPending is false)
+                        if (!user.isPending)
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: user.isCompleted
+                                  ? Colors.green
+                                  : Colors.red, // Button color
+                            ),
+                            onPressed: () {
+                              // Toggle isCompleted and update the user
+                              Users updatedUser = user.copyWith(
+                                isCompleted: !user.isCompleted,
+                              );
+                              _databaseService.updateUser(userId, updatedUser);
+                            },
+                            child: Text(
+                              user.isCompleted ? 'Completed' : 'Ongoing...',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               );

@@ -3,9 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Users {
   String name;
   String email;
-  Timestamp createdOn;
+  String createdOn;
   bool isPending;
   bool isCompleted;
+  String location;
+  String phone;
+  String severity;
+  String taskAcceptedOn;
+  String taskCompletedOn;
+  String symptomsDescription;
 
   Users({
     required this.name,
@@ -13,23 +19,41 @@ class Users {
     required this.createdOn,
     required this.isPending,
     required this.isCompleted,
+    required this.location,
+    required this.phone,
+    required this.severity,
+    required this.taskAcceptedOn,
+    required this.taskCompletedOn,
+    required this.symptomsDescription,
   });
 
   Users.fromJson(Map<String, Object?> json)
       : this(
           name: json['name']! as String,
           email: json['email']! as String,
-          createdOn: json['createdOn']! as Timestamp,
+          createdOn: json['createdOn']! as String,
           isPending: json['isPending']! as bool,
           isCompleted: json['isCompleted']! as bool,
+          location: json['location']! as String,
+          phone: json['phone']! as String,
+          severity: json['severity']! as String,
+          taskAcceptedOn: json['taskAcceptedOn']! as String,
+          taskCompletedOn: json['taskCompletedOn']! as String,
+          symptomsDescription: json['symptomsDescription']! as String,
         );
 
   Users copyWith({
     String? name,
     String? email,
-    Timestamp? updatedOn,
+    String? updatedOn,
     bool? isPending,
     bool? isCompleted,
+    String? location,
+    String? phone,
+    String? severity,
+    String? taskAcceptedOn,
+    String? taskCompletedOn,
+    String? symptomsDescription,
   }) {
     return Users(
       name: name ?? this.name,
@@ -37,6 +61,12 @@ class Users {
       createdOn: createdOn ?? this.createdOn,
       isPending: isPending ?? this.isPending,
       isCompleted: isCompleted ?? this.isCompleted,
+      location: location ?? this.location,
+      phone: phone ?? this.phone,
+      severity: severity ?? this.severity,
+      taskAcceptedOn: taskAcceptedOn ?? this.taskAcceptedOn,
+      taskCompletedOn: taskCompletedOn ?? this.taskCompletedOn,
+      symptomsDescription: symptomsDescription ?? this.symptomsDescription,
     );
   }
 
@@ -47,6 +77,12 @@ class Users {
       'createdOn': createdOn,
       'isPending': isPending,
       'isCompleted': isCompleted,
+      'location': location,
+      'phone': phone,
+      'severity': severity,
+      'taskAcceptedOn': taskAcceptedOn,
+      'taskCompletedOn': taskCompletedOn,
+      'symptomsDescription': symptomsDescription,
     };
   }
 }

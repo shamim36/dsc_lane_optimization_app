@@ -1,9 +1,16 @@
+import 'package:dsc_lane_optimization_app/admin/adminPage.dart';
+import 'package:dsc_lane_optimization_app/main.dart';
+import 'package:dsc_lane_optimization_app/news/newsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../about/aboutPage.dart';
+import '../emergencyNumber/emergencyNumbersPage.dart';
+import '../provider/client_provider.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
-
 
   const CustomAppBar({Key? key, required this.title}) : super(key: key);
 
@@ -17,7 +24,6 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   String _selectedButton = 'Home'; // Tracks the selected button title
   bool _isProfileHovered = false; // Tracks hover state for profile button
-  
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +76,34 @@ class _CustomAppBarState extends State<CustomAppBar> {
           _selectedButton = '''Emergency
   Number''';
           print('Emergency Numbers Button Clicked');
+          _selectedButton = 'Home';
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EmergencyNumbersPage()),
+          );
         });
       }),
       _createTextButton('News', () {
         setState(() {
           _selectedButton = 'News';
           print('News Button Clicked');
-
+          _selectedButton = 'Home';
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewsPage()),
+          );
         });
       }),
       _createTextButton('About', () {
         setState(() {
           _selectedButton = 'About';
           print('About Button Clicked');
+          _selectedButton = 'Home';
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AboutPage()),
+          );
         });
       }),
       const WhatsAppButton('+1234567891'),
@@ -228,7 +249,7 @@ class CustomScaffold extends StatelessWidget {
                   _createDrawerItem('News', () {}),
                   _createDrawerItem('About', () {}),
                   const WhatsAppButton('+1234567891'),
-                  _profileButton(),
+                  _profileButton(context),
                 ],
               ),
             )
@@ -244,10 +265,11 @@ class CustomScaffold extends StatelessWidget {
     );
   }
 
-  IconButton _profileButton() {
-    return IconButton(
-      icon: const Icon(Icons.person, color: Colors.black),
+  ElevatedButton _profileButton(context) {
+    return ElevatedButton(
+      child: const Icon(Icons.person, color: Colors.black),
       onPressed: () {
+        Provider.of<ClientProvider>(context, listen: false).setClient('admin');
         print('Clicked Profile');
       },
     );

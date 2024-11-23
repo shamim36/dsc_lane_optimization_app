@@ -29,4 +29,8 @@ class DatabaseService {
     _usersRef.doc(userId).update(user.toJson());
   }
 
+  void deleteUser(String userId){
+    _usersRef.doc(userId).delete();
+  }
+
 }
